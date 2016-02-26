@@ -50,3 +50,5 @@ gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth-timecrowd', github: 'pandeiro245/omniauth-timecrowd', branch: 'issue-1'
 gem 'slim'
 
+gem 'google-api-client', '>= 0.6'
+gem 'google_calendar'

@@ -53,6 +53,13 @@ class Timecrowd
     access_token.get(url).parsed
   end
 
+  def my_time_entries page = nil
+    url = "/api/#{VERSION}/user/recent_entries"
+    url += "?page=#{page}" unless page.nil?
+    puts url
+    access_token.get(url).parsed
+  end
+
   def create_time_entry(task)
     access_token.post(
       "/api/#{VERSION}/time_entries",
