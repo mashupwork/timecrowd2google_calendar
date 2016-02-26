@@ -1,11 +1,10 @@
 class Gcal
-  def initialize
+  def initialize calendar_id
     key = 'google_calendar_refresh_token'
     refresh_token = File.exist?("tmp/#{key}.txt") ? File.open("tmp/#{key}.txt", 'r').read : nil
-    calendar = Calendar.first.calendar_id || 'primary'
     @gcal = Google::Calendar.new(:client_id    => ENV['GOOGLE_KEY'], 
                                :client_secret => ENV['GOOGLE_SECRET'],
-                               :calendar      => calendar,
+                               :calendar      => calendar_id,
                                :redirect_url  => "urn:ietf:wg:oauth:2.0:oob"
                                )
     if !refresh_token or !@gcal.login_with_refresh_token(refresh_token)
