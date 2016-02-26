@@ -1,8 +1,15 @@
 class Calendar < ActiveRecord::Base
+  attr_accessor :gcal
+
+  def gcal
+    @gcal ||= Gcal.new(calendar_id)
+    @gcal
+  end
+
   def self.users
     users = {}
     self.where.not(timecrowd_user_id: nil).each do |c|
-      users[c.timecrowd_user_id] = Gcal.new(c.calendar_id)
+      users[c.timecrowd_user_id] = c 
     end
     users
   end
@@ -14,6 +21,10 @@ class Calendar < ActiveRecord::Base
     calendar.timecrowd_user_id = timecrowd_user_id
     calendar.title =  title
     calendar.save
+  end
+
+  def create params
+    gcal.create params
   end
 end
 
