@@ -2,7 +2,7 @@ class Gcal
   def initialize
     key = 'google_calendar_refresh_token'
     refresh_token = File.exist?("tmp/#{key}.txt") ? File.open("tmp/#{key}.txt", 'r').read : nil
-    calendar = ENV['GOOGLE_CALENDAR_ID'] || 'primary'
+    calendar = Calendar.first.calendar_id || 'primary'
     @gcal = Google::Calendar.new(:client_id    => ENV['GOOGLE_KEY'], 
                                :client_secret => ENV['GOOGLE_SECRET'],
                                :calendar      => calendar,
