@@ -23,8 +23,16 @@ class Calendar < ActiveRecord::Base
     calendar.save
   end
 
+  def events
+    gcal.events
+  end
+
   def create params
     gcal.create params
+  end
+
+  def delete event
+    gcal.delete event
   end
 end
 

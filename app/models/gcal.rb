@@ -3,12 +3,13 @@ class Gcal
 
   def initialize calendar_id
     key = 'google_calendar_refresh_token'
-    refresh_token = File.exist?("tmp/#{key}.txt") ? File.open("tmp/#{key}.txt", 'r').read : nil
-    @api = Google::Calendar.new(:client_id    => ENV['GOOGLE_KEY'], 
-                               :client_secret => ENV['GOOGLE_SECRET'],
-                               :calendar      => calendar_id,
-                               :redirect_url  => "urn:ietf:wg:oauth:2.0:oob"
-                               )
+    refresh_token = self.class.get key
+    @api = Google::Calendar.new(
+      :client_id    => ENV['GOOGLE_KEY'], 
+      :client_secret => ENV['GOOGLE_SECRET'],
+      :calendar      => calendar_id,
+      :redirect_url  => "urn:ietf:wg:oauth:2.0:oob"
+    )
     if !refresh_token or !@api.login_with_refresh_token(refresh_token)
       puts "Visit the following web page in your browser and approve access."
       puts @api.authorize_url
@@ -19,7 +20,11 @@ class Gcal
       puts "your refresh token is:\n\t#{refresh_token}\n"
     end
     val = @api.refresh_token 
-    File.open("tmp/#{key}.txt", 'w') { |file| file.write(val) }
+    self.class.save key, val
+  end
+
+  def events
+    api.events
   end
 
   def create params
@@ -29,6 +34,19 @@ class Gcal
       e.end_time    = params[:end_time]
       e.description = params[:description]
     end
+  end
+
+  def delete event
+    api.delete_event(event)
+  end
+
+  def self.get key
+    path = "tmp/#{key}.txt"
+    File.exist?(path) ? File.open(path, 'r').read : nil
+  end
+
+  def self.save key, val
+    File.open("tmp/#{key}.txt", 'w') { |file| file.write(val) }
   end
 end
 
