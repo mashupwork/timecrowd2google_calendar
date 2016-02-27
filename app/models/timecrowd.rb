@@ -38,6 +38,10 @@ class Timecrowd
     access_token.get("/api/#{VERSION}/teams/#{team_id}/tasks?state=#{state}").parsed
   end
 
+  def team_task(team_id, id)
+    access_token.get("/api/#{VERSION}/teams/#{team_id}/tasks/#{id}").parsed
+  end
+
   def update_team_task(team_id, id, body)
     access_token.put("/api/#{VERSION}/teams/#{team_id}/tasks/#{id}", body: body).parsed
   end
@@ -48,6 +52,13 @@ class Timecrowd
 
   def time_entries page = nil
     url = "/api/#{VERSION}/time_entries"
+    url += "?page=#{page}" unless page.nil?
+    puts url
+    access_token.get(url).parsed
+  end
+
+  def my_time_entries page = nil
+    url = "/api/#{VERSION}/user/recent_entries"
     url += "?page=#{page}" unless page.nil?
     puts url
     access_token.get(url).parsed
