@@ -53,6 +53,7 @@ gem 'omniauth-timecrowd', github: 'pandeiro245/omniauth-timecrowd', branch: 'iss
 gem 'slim'
 
 gem 'google-api-client', '>= 0.6'
-gem 'google_calendar', path: '../google_calendar'
+#gem 'google_calendar', path: '../google_calendar'
+gem 'google_calendar'
 
 gem 'unf'
