@@ -3,11 +3,13 @@ class Sync
     @cals = Calendar.users
     @cals.each do |uid, cal|
       puts "deletee timecrowd_user_id: #{uid}"
-      events = cal.gcal.api.events
+      events = cal.events
+      return events # デバッグ中
+
       while events.present? do
         events.each do |event|
           puts "delete #{event.title}"
-          cal.gcal.api.delete_event(event)
+          cal.delete(event)
         end
         events = cal.gcal.api.events
         puts 'again'

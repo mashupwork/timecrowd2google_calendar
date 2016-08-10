@@ -36,6 +36,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 2.14.0'
+  gem 'gem_reloader'
 end
 
 group :development do
@@ -52,6 +53,7 @@ gem 'omniauth-timecrowd', github: 'pandeiro245/omniauth-timecrowd', branch: 'iss
 gem 'slim'
 
 gem 'google-api-client', '>= 0.6'
+#gem 'google_calendar', path: '../google_calendar'
 gem 'google_calendar'
 
 gem 'unf'
